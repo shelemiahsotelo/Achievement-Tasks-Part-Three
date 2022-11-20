@@ -57,7 +57,7 @@ while True:
       invalidList.append(list)
 
   if len(invalidList) > 0:
-    print("\nList of invalid couse codes:")
+    print("\nList of invalid course codes:")
   for list in invalidList:
     print(list)
 
