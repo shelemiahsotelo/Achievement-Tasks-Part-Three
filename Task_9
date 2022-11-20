@@ -1,0 +1,87 @@
+# Achievement Task #9 - Course Registration
+# Shelemiah Sotelo - 8823190
+
+
+# Empty dictionary.
+
+import os
+student = {}   
+
+# Add keys and values to dictionary
+student["First Name"] = input("Please enter First Name: ")           
+student["Last Name"] = input("Please enter Last Name: ")
+student["Student Number"] = input("Please enter Student Number: ")
+
+#Used .get to assign values to a variable.
+firstname = student.get("First Name")
+lastname = student.get("Last Name")
+studentnumber = student.get("Student Number")
+
+# Dictionary of courses available. (Course Code for keys, Course Name for values.)
+courses = {
+   "PROG1783" : "IT Support Programming Fundamentals",
+   "CON0101" : "Conestoga 101",
+   "CDEV1830" : "Career Success",
+   "INFO1385" : "Network Infrastructure I"
+}
+
+for code in courses:
+   print(code, ":", courses.get(code))
+
+while True:
+  print("Please enter Course Codes separated by comma. ")
+  courseCode = input().upper()
+
+  finalList = []
+
+  if courseCode != '':
+    finalList = courseCode.split(',')
+  invalidList = []
+  validList = []
+
+  print(len(finalList))
+
+  # Check if user entered a course
+  if len(finalList) == 0:
+    ask_again = input("No courses entered. To exit, type 1. To enter courses again, type 2:  ")
+    if ask_again == '1':
+      break
+    elif ask_again == '2':
+      continue
+  
+  print("First Name: ", firstname, "\nLast Name: ", lastname, "\nStudent Number: ", studentnumber)
+  for list in finalList:
+    if courses.get(list) is not None:
+      validList.append(list)
+    else:
+      invalidList.append(list)
+
+  if len(invalidList) > 0:
+    print("\nList of invalid couse codes:")
+  for list in invalidList:
+    print(list)
+
+  if len(validList) > 0:
+    print("\nList of valid course codes entered:")
+    for list in validList:
+      print(list, ":", courses.get(list))
+
+    #  File name for .txt
+    filename = firstname+'-'+lastname+ studentnumber+ '.txt'
+
+    with open(filename, 'w') as f:
+      # create the string to be saved in .txt file
+      student_info = 'Student Name: ' + firstname + ' ' + lastname + '\nStudent Number: '+ studentnumber + '\nTotal number of registered courses: ' + str(len(validList))
+      breakline = '\n-----------------------------------------------------'
+      course_save = ''
+
+      for index, list  in enumerate(validList):
+        course_save += ('\nCourse#' + str(index+1) + ': ' + courses.get(list) + '-' +list)
+
+      toSave = student_info + breakline + course_save
+
+      f.write(toSave)
+      cwd = os.getcwd()
+      print("Registration for valid courses saved to file: " + cwd + '\\'+ filename)
+
+  break
