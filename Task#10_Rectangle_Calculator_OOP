@@ -1,0 +1,33 @@
+# Task #10 - Rectangle Calculator (OOP)
+# Shelemiah Sotelo - 8823190
+
+class Rectangle:
+    
+    # Instance attributes length and width
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    # Method to calculate and returns the perimeter of the object
+    def calculatePerimeter(self):
+        return 2*(self.length+self.width)
+
+    # Method to calculate and returns the area of the object
+    def calculateArea(self):
+        return self.length*self.width
+    
+    # Displays 
+    def displayInfo(self):
+        print("Length: {}\nWidth: {}\nPerimeter: {}\nArea: {}".format(self.length, self.width,self.calculatePerimeter(), self.calculateArea()))
+
+# Creating instance of Rectangle class
+rectangle1 = Rectangle(8,12)
+
+
+print("\nPrinting the result of Rectangle.calculatePerimeter(): {}".format(rectangle1.calculatePerimeter()))
+
+print("\nPrinting the result of Rectangle.calculateArea(): {}".format(rectangle1.calculateArea()))
+
+print("\nNext line will be result after calling displayInfo() method")
+rectangle1.displayInfo()
+print("\n", end="")
