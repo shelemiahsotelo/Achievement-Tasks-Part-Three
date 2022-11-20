@@ -1,0 +1,112 @@
+# Task #8 - Unit Converter Modified
+# Shelemiah Sotelo - 8823190
+
+
+# Function to validate if input is a number within the given range
+def validate_input_number(message, type, min, max):
+   input_number = None
+   while True:
+      try:
+         input_number = input(message)
+         if input_number.strip().upper()=='EXIT':
+            break
+         if type.strip().upper() == 'INT':
+            input_number = int(input_number)
+         elif type.strip().upper() == 'FLOAT':
+            input_number = float(input_number)
+
+      except ValueError:
+         print("( Please enter a number )")
+         continue
+      except KeyboardInterrupt:
+         print("( Invalid input! )")
+         continue
+   
+      if input_number>=min and input_number<=max:
+         break
+
+   return input_number
+
+def validate_input_string(message, valid_values):
+   input_string = None
+   while True:
+      try:
+         input_string = input(message)
+         if input_string.strip().upper()=='EXIT':
+            break
+         elif input_string.strip().upper() not in valid_values:
+            raise ValueError
+
+      except ValueError:
+         print("Valid values:", valid_values)
+         continue
+      except KeyboardInterrupt:
+         continue
+   
+      else:
+         break
+
+   return input_string
+
+
+def temp_conversion(temp_val, temp_cf):               # Function for temparature conversion.
+   if temp_cf.upper() == 'C':
+      fahr = (temp_val * 1.8) + 32                  # Formula for Celsius to Fahrenheit conversion
+      result = '%.2f degree Celsius is equal to: %.2f Fahrenheit' %(temp_val, fahr)
+      return result
+   
+   elif temp_cf.upper() == 'F':
+      cels = (temp_val - 32) * 5/9                  # Formula for Fahrenheit to Celsius conversion
+      result = '%.2f degree Fahrenheit is equal to: %.2f Celsius' %(temp_val, cels)
+      return result
+
+   else:
+      raise ValueError("Invalid! C/F only.")
+ 
+def speed_conversion(speed_val, speed_unit):          # Function for speed conversion.
+   if speed_unit.upper() == 'KMH':
+      mph = (speed_val * 0.6214)                    # Formula for KMH to MPH conversion
+      result = '%.2f KMH is equal to: %.2f MPH' %(speed_val, mph)
+      return result
+   
+   elif speed_unit.upper() == 'MPH':
+      kmh = (speed_val * 1.60934)                   # Formula for MPH to KMH conversion
+      result = '%.2f MPH is equal to: %.2f KMH' %(speed_val, kmh)
+      return result
+
+   else:
+      raise ValueError("Invalid! KMH/MPH only.")
+
+
+try:
+   print("Unit Converter \n1. Temparature \n2. Speed" )      # Ask user what they want to convert (temparature/speed).
+   choice = validate_input_number('What do you want to convert?:', 'INT', 1,2)
+
+   if choice == 1:
+      print("\n", end='')
+      #  Lowest possible temperature is -459.67F
+      temp_num = validate_input_number('Please enter temperature value:', 'FLOAT', -459.67, 1.8e10308  )
+
+      valid_temp_unit = [ 'C', 'F']
+      print("\n", end="")
+      temp_unit = validate_input_string("Please enter unit: (C/F) ", valid_temp_unit)
+
+      temp_result = temp_conversion(temp_num, temp_unit)        # Call the function
+
+      print(temp_result)
+
+
+   elif choice == 2:
+      print("\n", end="")
+      speed_num = validate_input_number("Please enter speed value: ", 'FLOAT', float('-inf'), float('inf')  )              
+
+      valid_speed_unit = [ 'KMH', 'MPH']
+      print("\n", end="")
+      speed_unit = validate_input_string("Please speed unit: (KMH/MPH) ", valid_speed_unit)
+
+      speed_result = speed_conversion(speed_num, speed_unit)    # Call the function
+
+      print(speed_result)
+
+except Exception as e:
+   print(e)
